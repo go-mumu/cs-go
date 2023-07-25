@@ -1,0 +1,10 @@
+[mysql_def]
+username = "web_user"
+password = "l%meFN!Z88yRgrjz"
+protocol = "tcp"
+address = "rm-2zeti0v9e6940n93p.mysql.rds.aliyuncs.com"
+port = 3306
+dbname = "dushuhui"
+charset = "utf8mb4"
+parseTime = true
+loc = "Local"
