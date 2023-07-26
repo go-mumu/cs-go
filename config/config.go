@@ -35,6 +35,7 @@ type MysqlConf struct {
 	Loc       string `toml:"loc" mapstructure:"loc"`
 }
 
+// Init 注入初始化配置文件
 func Init() *Config {
 	// 控制台打印信息
 	log.Cli.Info("config path", "path", flags.ConfPath)

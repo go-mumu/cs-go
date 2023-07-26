@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-25
  * File: common_handler.go
- * Desc:
+ * Desc: 通用处理
  */
 
 package handler

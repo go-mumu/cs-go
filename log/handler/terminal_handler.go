@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-25
  * File: terminal_handler.go
- * Desc: 终端 log 处理
+ * Desc: 终端处理
  */
 
 package handler

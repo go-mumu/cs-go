@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-25
  * File: slog.go
- * Desc:
+ * Desc: 初始化日志
  */
 
 package log

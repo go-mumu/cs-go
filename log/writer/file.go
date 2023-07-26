@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-25
  * File: file.go
- * Desc:
+ * Desc: 日志 writer
  */
 
 package writer
