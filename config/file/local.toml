@@ -8,3 +8,17 @@ dbname = "dushuhui"
 charset = "utf8mb4"
 parseTime = true
 loc = "Local"
+
+[rpc]
+grpc_addr = ":8992"
+http_addr = ":8991"
+
+grpc_handler_timeout = 1200000
+
+http_read_timeout = 120000
+http_write_timeout = 120000
+
+max_body_size = 167772160
+
+http_idle_timeout = 120000
+grpc_idle_timeout = 120000

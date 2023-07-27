@@ -12,7 +12,10 @@ package inject
 
 import (
 	"github.com/go-mumu/cs-go/config"
+	"github.com/go-mumu/cs-go/dal"
+	"github.com/go-mumu/cs-go/handler"
 	"github.com/go-mumu/cs-go/mysql"
+	"github.com/go-mumu/cs-go/server"
 	"github.com/google/wire"
 )
 
@@ -23,6 +26,9 @@ func InitApp() (*App, func(), error) {
 			wire.Struct(new(App), "*"),
 			mysql.InitDef,
 			config.Init,
+			dal.DaoProviderSet,
+			handler.HandlersProviderSet,
+			server.NewServer,
 		),
 	)
 }

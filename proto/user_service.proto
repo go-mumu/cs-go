@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = ".;pb";
+
+import "google/api/annotations.proto";
+import "user_struct.proto";
+
+service UserService {
+  rpc IsVip(IsVipReq) returns (IsVipRes) {
+    option(google.api.http) = {
+      post: "/api/user/isVip",
+      body: "*"
+    };
+  }
+}

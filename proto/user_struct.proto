@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = ".;pb";
+
+message IsVipReq {
+  int64 mid = 1;
+}
+
+message IsVipRes {
+  int32 vip7 = 1;
+  int32 overdue = 2;
+  string type = 3;
+  string viptime = 4;
+  string vipvalidity = 5;
+}

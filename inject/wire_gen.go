@@ -8,7 +8,11 @@ package inject
 
 import (
 	"github.com/go-mumu/cs-go/config"
+	"github.com/go-mumu/cs-go/dal"
+	"github.com/go-mumu/cs-go/dal/dao"
+	"github.com/go-mumu/cs-go/handler"
 	"github.com/go-mumu/cs-go/mysql"
+	"github.com/go-mumu/cs-go/server"
 )
 
 // Injectors from injector.go:
@@ -17,9 +21,17 @@ import (
 func InitApp() (*App, func(), error) {
 	configConfig := config.Init()
 	defMysql := mysql.InitDef(configConfig)
+	wxuserDao := dao.NewWxuserDao(defMysql)
+	dalDao := dal.NewDao(wxuserDao)
+	serverServer := server.NewServer()
+	userServiceHandler := handler.NewUserServiceHandler(dalDao)
+	handlers := handler.NewHandlers(userServiceHandler)
 	app := &App{
 		DefMysql: defMysql,
 		Config:   configConfig,
+		Dao:      dalDao,
+		Server:   serverServer,
+		Handlers: handlers,
 	}
 	return app, func() {
 	}, nil

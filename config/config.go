@@ -20,6 +20,7 @@ var (
 
 type Config struct {
 	DefMysql *MysqlConf `toml:"mysql_def" mapstructure:"mysql_def"`
+	Rpc      *RpcConf   `toml:"rpc" mapstructure:"rpc"`
 }
 
 // MysqlConf Mysql配置
@@ -33,6 +34,18 @@ type MysqlConf struct {
 	Charset   string `toml:"charset" mapstructure:"charset"`
 	ParseTime bool   `toml:"parseTime" mapstructure:"parseTime"`
 	Loc       string `toml:"loc" mapstructure:"loc"`
+}
+
+// RpcConf 配置
+type RpcConf struct {
+	GrpcAddr           string `toml:"grpc_addr" mapstructure:"grpc_addr"`                       // grpc server地址
+	HttpAddr           string `toml:"http_addr" mapstructure:"http_addr"`                       // http server地址
+	GrpcHandlerTimeout int    `toml:"grpc_handler_timeout" mapstructure:"grpc_handler_timeout"` // Grpc Handler timeout(ms), default 5000
+	HttpReadTimeout    int    `toml:"http_read_timeout" mapstructure:"http_read_timeout"`       // Receive http request timeout(ms), including the body, default 5000
+	HttpWriteTimeout   int    `toml:"http_write_timeout" mapstructure:"http_write_timeout"`     // Keep-alive timeout(ms), default 60000
+	HttpIdleTimeout    int    `toml:"http_idle_timeout" mapstructure:"http_idle_timeout"`       // Keep-alive timeout(ms), default 60000
+	GrpcIdleTimeout    int    `toml:"grpc_idle_timeout" mapstructure:"grpc_idle_timeout"`       // grpc Keep-alive timeout(ms), default 60000
+	MaxBodySize        int    `toml:"max_body_size" mapstructure:"max_body_size"`               // grpc 能处理的最大bodysize 20M
 }
 
 // Init 注入初始化配置文件
