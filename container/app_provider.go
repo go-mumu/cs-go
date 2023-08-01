@@ -6,11 +6,11 @@
  * Desc: provider
  */
 
-package inject
+package container
 
 import (
 	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/dal"
+	"github.com/go-mumu/cs-go/container/provider/dao_provider"
 	"github.com/go-mumu/cs-go/handler"
 	"github.com/go-mumu/cs-go/mysql"
 	"github.com/go-mumu/cs-go/proto/pb"
@@ -24,12 +24,11 @@ import (
 type App struct {
 	DefMysql *mysql.DefMysql
 	Config   *config.Config
-	Dao      *dal.Dao
+	Dao      *dao_provider.Dao
 	Server   *server.Server
-	Handlers *handler.Handlers
 }
 
-func (a *App) Run(s *server.Server, h *handler.Handlers) error {
+func (a *App) Run(s *server.Server, d *dao_provider.Dao) error {
 	s.SetGrpcAddr(config.C.Rpc.GrpcAddr)
 	s.SetHttpAddr(config.C.Rpc.HttpAddr)
 
@@ -44,7 +43,7 @@ func (a *App) Run(s *server.Server, h *handler.Handlers) error {
 	s.SetMaxBodySize(config.C.Rpc.MaxBodySize)
 
 	s.SetGrpcRegister(func(s *grpc.Server) {
-		pb.RegisterUserServiceServer(s, h.UserServiceHandler)
+		pb.RegisterUserServiceServer(s, &handler.UserServiceHandler{Dao: d})
 	})
 
 	s.SetHttpRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {

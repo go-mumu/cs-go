@@ -6,7 +6,7 @@ local:
 
 .PHONY:inject
 inject:
-	cd ./inject && wire
+	cd ./container && wire
 
 .PHONY:proto
 proto:

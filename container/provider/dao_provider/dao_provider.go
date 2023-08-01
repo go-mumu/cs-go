@@ -6,7 +6,7 @@
  * Desc:
  */
 
-package dal
+package dao_provider
 
 import (
 	"github.com/go-mumu/cs-go/dal/dao"

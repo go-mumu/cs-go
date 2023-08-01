@@ -10,7 +10,7 @@ package handler
 
 import (
 	"context"
-	"github.com/go-mumu/cs-go/dal"
+	"github.com/go-mumu/cs-go/container/provider/dao_provider"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"google.golang.org/grpc/metadata"
 	"strconv"
@@ -18,12 +18,12 @@ import (
 
 type UserServiceHandler struct {
 	pb.UnimplementedUserServiceServer
-	dao *dal.Dao
+	Dao *dao_provider.Dao
 }
 
-func NewUserServiceHandler(dao *dal.Dao) *UserServiceHandler {
+func NewUserServiceHandler(Dao *dao_provider.Dao) *UserServiceHandler {
 	return &UserServiceHandler{
-		dao: dao,
+		Dao: Dao,
 	}
 }
 
@@ -36,7 +36,7 @@ func (h *UserServiceHandler) IsVip(ctx context.Context, req *pb.IsVipReq) (*pb.I
 	}
 
 	if ok {
-		userInfo := h.dao.WxuserDao.GetUserInfoByMid(ctx, mid)
+		userInfo := h.Dao.WxuserDao.GetUserInfoByMid(ctx, mid)
 
 		return &pb.IsVipRes{
 			Vip7:        userInfo.Vip7,

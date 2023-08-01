@@ -9,14 +9,14 @@
 package main
 
 import (
-	"github.com/go-mumu/cs-go/inject"
+	"github.com/go-mumu/cs-go/container"
 	"github.com/go-mumu/cs-go/log"
 	"os"
 )
 
 func main() {
 	// init app
-	app, cleanfunc, err := inject.InitApp()
+	app, cleanfunc, err := container.InitApp()
 	if err != nil {
 		log.Cli.Info("init app failed")
 		os.Exit(1)
@@ -27,7 +27,7 @@ func main() {
 	// gen default mysql models
 	// dal.GenDefModels(app.DefMysql.DB)
 
-	err = app.Run(app.Server, app.Handlers)
+	err = app.Run(app.Server, app.Dao)
 	if err != nil {
 		return
 	}
