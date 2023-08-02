@@ -27,25 +27,25 @@ type App struct {
 	Server   *server.Server
 }
 
-func (a *App) Run(s *server.Server, d *provider.Dao) error {
-	s.SetGrpcAddr(config.C.Rpc.GrpcAddr)
-	s.SetHttpAddr(config.C.Rpc.HttpAddr)
+func (a *App) Run() error {
+	a.Server.SetGrpcAddr(config.C.Rpc.GrpcAddr)
+	a.Server.SetHttpAddr(config.C.Rpc.HttpAddr)
 
-	s.SetGrpcHandlerTimeout(config.C.Rpc.GrpcHandlerTimeout)
+	a.Server.SetGrpcHandlerTimeout(config.C.Rpc.GrpcHandlerTimeout)
 
-	s.SetHttpReadTimeout(config.C.Rpc.HttpReadTimeout)
-	s.SetHttpWriteTimeout(config.C.Rpc.HttpWriteTimeout)
+	a.Server.SetHttpReadTimeout(config.C.Rpc.HttpReadTimeout)
+	a.Server.SetHttpWriteTimeout(config.C.Rpc.HttpWriteTimeout)
 
-	s.SetGrpcIdleTimeout(config.C.Rpc.GrpcIdleTimeout)
-	s.SetHttpIdleTimeout(config.C.Rpc.HttpIdleTimeout)
+	a.Server.SetGrpcIdleTimeout(config.C.Rpc.GrpcIdleTimeout)
+	a.Server.SetHttpIdleTimeout(config.C.Rpc.HttpIdleTimeout)
 
-	s.SetMaxBodySize(config.C.Rpc.MaxBodySize)
+	a.Server.SetMaxBodySize(config.C.Rpc.MaxBodySize)
 
-	s.SetGrpcRegister(func(s *grpc.Server) {
-		pb.RegisterUserServiceServer(s, &handler.UserServiceHandler{Dao: d})
+	a.Server.SetGrpcRegister(func(s *grpc.Server) {
+		pb.RegisterUserServiceServer(s, &handler.UserServiceHandler{Dao: a.Dao})
 	})
 
-	s.SetHttpRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {
+	a.Server.SetHttpRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {
 		return server.HttpRegisterFunc(ctx, mux, endpoint, opts,
 			[]server.HttpRegister{
 				pb.RegisterUserServiceHandlerFromEndpoint,
@@ -53,5 +53,5 @@ func (a *App) Run(s *server.Server, d *provider.Dao) error {
 		)
 	})
 
-	return s.Run()
+	return a.Server.Run()
 }

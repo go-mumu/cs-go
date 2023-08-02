@@ -27,7 +27,7 @@ func main() {
 	// gen default mysql models
 	// dal.GenDefModels(app.DefMysql.DB)
 
-	err = app.Run(app.Server, app.Dao)
+	err = app.Run()
 	if err != nil {
 		return
 	}
