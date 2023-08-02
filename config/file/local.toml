@@ -9,6 +9,15 @@ charset = "utf8mb4"
 parseTime = true
 loc = "Local"
 
+[redis]
+host = "172.17.223.142"
+port = "6379"
+password = ""
+database = 0
+prefix_key = "csapi_"
+read_timeout_ms = 200
+write_timeout_ms = 200
+
 [rpc]
 grpc_addr = ":8992"
 http_addr = ":8991"

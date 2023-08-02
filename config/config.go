@@ -21,6 +21,7 @@ var (
 type Config struct {
 	DefMysql *MysqlConf `toml:"mysql_def" mapstructure:"mysql_def"`
 	Rpc      *RpcConf   `toml:"rpc" mapstructure:"rpc"`
+	DefRedis *RedisConf `toml:"redis" mapstructure:"redis"`
 }
 
 // MysqlConf Mysql配置
@@ -34,6 +35,17 @@ type MysqlConf struct {
 	Charset   string `toml:"charset" mapstructure:"charset"`
 	ParseTime bool   `toml:"parseTime" mapstructure:"parseTime"`
 	Loc       string `toml:"loc" mapstructure:"loc"`
+}
+
+// RedisConf redis config
+type RedisConf struct {
+	Host           string `toml:"host" mapstructure:"host"`
+	Port           string `toml:"port" mapstructure:"port"`
+	Password       string `toml:"password" mapstructure:"password"`
+	Database       int    `toml:"database" mapstructure:"database"`
+	PrefixKey      string `toml:"prefix_key" mapstructure:"prefix_key"`
+	ReadTimeoutMs  int    `toml:"read_timeout_ms" mapstructure:"read_timeout_ms"`
+	WriteTimeoutMs int    `toml:"write_timeout_ms" mapstructure:"write_timeout_ms"`
 }
 
 // RpcConf 配置
