@@ -10,8 +10,7 @@ parseTime = true
 loc = "Local"
 
 [redis]
-host = "172.17.223.142"
-port = "6379"
+host = "172.17.223.142:6379"
 password = ""
 database = 0
 prefix_key = "csapi_"

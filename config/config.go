@@ -40,7 +40,6 @@ type MysqlConf struct {
 // RedisConf redis config
 type RedisConf struct {
 	Host           string `toml:"host" mapstructure:"host"`
-	Port           string `toml:"port" mapstructure:"port"`
 	Password       string `toml:"password" mapstructure:"password"`
 	Database       int    `toml:"database" mapstructure:"database"`
 	PrefixKey      string `toml:"prefix_key" mapstructure:"prefix_key"`

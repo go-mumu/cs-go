@@ -12,8 +12,6 @@ import (
 	"context"
 	"github.com/go-mumu/cs-go/container/provider"
 	"github.com/go-mumu/cs-go/proto/pb"
-	"google.golang.org/grpc/metadata"
-	"strconv"
 )
 
 type UserServiceHandler struct {
@@ -21,31 +19,15 @@ type UserServiceHandler struct {
 	Dao *provider.Dao
 }
 
-func NewUserServiceHandler(Dao *provider.Dao) *UserServiceHandler {
-	return &UserServiceHandler{
-		Dao: Dao,
-	}
-}
-
 func (h *UserServiceHandler) IsVip(ctx context.Context, req *pb.IsVipReq) (*pb.IsVipRes, error) {
-	md, ok := metadata.FromIncomingContext(ctx)
 
-	mid, err := strconv.ParseInt(md.Get("mid")[0], 10, 64)
-	if err != nil {
-		return nil, err
-	}
+	userInfo := h.Dao.WxuserDao.GetUserInfoByMid(ctx, req.Mid)
 
-	if ok {
-		userInfo := h.Dao.WxuserDao.GetUserInfoByMid(ctx, mid)
-
-		return &pb.IsVipRes{
-			Vip7:        userInfo.Vip7,
-			Overdue:     0,
-			Type:        "",
-			Viptime:     "2022",
-			Vipvalidity: "",
-		}, nil
-	} else {
-		return &pb.IsVipRes{}, nil
-	}
+	return &pb.IsVipRes{
+		Vip7:        userInfo.Vip7,
+		Overdue:     0,
+		Type:        "",
+		Viptime:     "2022",
+		Vipvalidity: "",
+	}, nil
 }
