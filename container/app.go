@@ -23,7 +23,6 @@ import (
 // App 全局应用程序
 type App struct {
 	DefMysql *mysql.DefMysql
-	Config   *config.Config
 	Dao      *provider.Dao
 	Server   *server.Server
 }

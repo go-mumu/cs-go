@@ -21,11 +21,12 @@ func InitApp() (*App, func(), error) {
 	configConfig := config.Init()
 	defMysql := mysql.InitDef(configConfig)
 	wxuserDao := dao.NewWxuserDao(defMysql)
-	providerDao := provider.NewDao(wxuserDao)
+	providerDao := &provider.Dao{
+		WxuserDao: wxuserDao,
+	}
 	serverServer := server.NewServer()
 	app := &App{
 		DefMysql: defMysql,
-		Config:   configConfig,
 		Dao:      providerDao,
 		Server:   serverServer,
 	}

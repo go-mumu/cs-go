@@ -14,18 +14,10 @@ import (
 )
 
 var DaoProviderSet = wire.NewSet(
-	wire.NewSet(dao.NewWxuserDao),
-	wire.NewSet(NewDao),
+	wire.Struct(new(Dao), "*"),
+	dao.NewWxuserDao,
 )
 
 type Dao struct {
 	WxuserDao *dao.WxuserDao
-}
-
-func NewDao(
-	wxuserDao *dao.WxuserDao,
-) *Dao {
-	return &Dao{
-		WxuserDao: wxuserDao,
-	}
 }
