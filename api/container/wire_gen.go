@@ -7,15 +7,20 @@
 package container
 
 import (
+	"github.com/go-mumu/cs-go/api/container/provider"
 	"github.com/go-mumu/cs-go/config"
-	redis2 "github.com/go-mumu/cs-go/redis"
-	"github.com/redis/go-redis/v9"
+	"github.com/go-mumu/cs-go/redis"
 )
 
 // Injectors from injector.go:
 
-func Redis() *redis.Client {
+func InitApp() (*provider.App, func(), error) {
 	configConfig := config.Init()
-	client := redis2.InitRedis(configConfig)
-	return client
+	client := redis.InitRedis(configConfig)
+	app := &provider.App{
+		Config:      configConfig,
+		RedisClient: client,
+	}
+	return app, func() {
+	}, nil
 }

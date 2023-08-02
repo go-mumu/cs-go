@@ -11,8 +11,8 @@ package middleware
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/go-mumu/cs-go/api/container"
 	"github.com/go-mumu/cs-go/log"
+	"github.com/redis/go-redis/v9"
 )
 
 type Request struct {
@@ -24,9 +24,9 @@ type UserInfo struct {
 	XcxOpenId string `json:"xcx_openid"`
 }
 
-func Login() gin.HandlerFunc {
+func Login(client *redis.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if authMiniProgramToken(c) {
+		if authMiniProgramToken(c, client) {
 			c.Next()
 		} else {
 			c.AbortWithStatusJSON(505, gin.H{
@@ -36,13 +36,13 @@ func Login() gin.HandlerFunc {
 	}
 }
 
-func authMiniProgramToken(c *gin.Context) bool {
+func authMiniProgramToken(c *gin.Context, client *redis.Client) bool {
 	token, err := getMiniProgramToken(c)
 	if token == "" || err != nil {
 		return false
 	}
 
-	response := container.Redis().Get(c.Request.Context(), token)
+	response := client.Get(c.Request.Context(), token)
 	if response.Val() == "" || response.Err() != nil {
 		return false
 	}
