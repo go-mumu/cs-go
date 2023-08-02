@@ -10,7 +10,7 @@ package handler
 
 import (
 	"context"
-	"github.com/go-mumu/cs-go/container/provider/dao_provider"
+	"github.com/go-mumu/cs-go/container/provider"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"google.golang.org/grpc/metadata"
 	"strconv"
@@ -18,10 +18,10 @@ import (
 
 type UserServiceHandler struct {
 	pb.UnimplementedUserServiceServer
-	Dao *dao_provider.Dao
+	Dao *provider.Dao
 }
 
-func NewUserServiceHandler(Dao *dao_provider.Dao) *UserServiceHandler {
+func NewUserServiceHandler(Dao *provider.Dao) *UserServiceHandler {
 	return &UserServiceHandler{
 		Dao: Dao,
 	}

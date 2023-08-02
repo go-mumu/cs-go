@@ -8,7 +8,7 @@ package container
 
 import (
 	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/container/provider/dao_provider"
+	"github.com/go-mumu/cs-go/container/provider"
 	"github.com/go-mumu/cs-go/dal/dao"
 	"github.com/go-mumu/cs-go/mysql"
 	"github.com/go-mumu/cs-go/server"
@@ -21,12 +21,12 @@ func InitApp() (*App, func(), error) {
 	configConfig := config.Init()
 	defMysql := mysql.InitDef(configConfig)
 	wxuserDao := dao.NewWxuserDao(defMysql)
-	dao_providerDao := dao_provider.NewDao(wxuserDao)
+	providerDao := provider.NewDao(wxuserDao)
 	serverServer := server.NewServer()
 	app := &App{
 		DefMysql: defMysql,
 		Config:   configConfig,
-		Dao:      dao_providerDao,
+		Dao:      providerDao,
 		Server:   serverServer,
 	}
 	return app, func() {

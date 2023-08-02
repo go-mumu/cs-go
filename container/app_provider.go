@@ -10,7 +10,7 @@ package container
 
 import (
 	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/container/provider/dao_provider"
+	"github.com/go-mumu/cs-go/container/provider"
 	"github.com/go-mumu/cs-go/handler"
 	"github.com/go-mumu/cs-go/mysql"
 	"github.com/go-mumu/cs-go/proto/pb"
@@ -24,11 +24,11 @@ import (
 type App struct {
 	DefMysql *mysql.DefMysql
 	Config   *config.Config
-	Dao      *dao_provider.Dao
+	Dao      *provider.Dao
 	Server   *server.Server
 }
 
-func (a *App) Run(s *server.Server, d *dao_provider.Dao) error {
+func (a *App) Run(s *server.Server, d *provider.Dao) error {
 	s.SetGrpcAddr(config.C.Rpc.GrpcAddr)
 	s.SetHttpAddr(config.C.Rpc.HttpAddr)
 
