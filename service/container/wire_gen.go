@@ -7,13 +7,13 @@
 package container
 
 import (
-	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/container/provider"
-	"github.com/go-mumu/cs-go/dal/dao"
-	"github.com/go-mumu/cs-go/handler"
-	"github.com/go-mumu/cs-go/mysql"
+	"github.com/go-mumu/cs-go/library/config"
+	"github.com/go-mumu/cs-go/library/mysql"
 	"github.com/go-mumu/cs-go/proto/pb"
-	"github.com/go-mumu/cs-go/server"
+	"github.com/go-mumu/cs-go/service/container/provider"
+	"github.com/go-mumu/cs-go/service/dal/dao"
+	"github.com/go-mumu/cs-go/service/handler"
+	"github.com/go-mumu/cs-go/service/server"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"

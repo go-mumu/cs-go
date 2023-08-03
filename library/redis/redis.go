@@ -9,8 +9,8 @@
 package redis
 
 import (
-	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/log"
+	"github.com/go-mumu/cs-go/library/config"
+	"github.com/go-mumu/cs-go/library/log"
 	"github.com/redis/go-redis/v9"
 	"time"
 )

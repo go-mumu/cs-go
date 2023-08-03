@@ -9,8 +9,8 @@
 package config
 
 import (
-	"github.com/go-mumu/cs-go/common/flags"
-	"github.com/go-mumu/cs-go/log"
+	"github.com/go-mumu/cs-go/library/common/flags"
+	"github.com/go-mumu/cs-go/library/log"
 	"github.com/spf13/viper"
 )
 

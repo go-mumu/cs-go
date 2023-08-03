@@ -11,7 +11,7 @@ package middleware
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/go-mumu/cs-go/log"
+	"github.com/go-mumu/cs-go/library/log"
 	"github.com/redis/go-redis/v9"
 )
 

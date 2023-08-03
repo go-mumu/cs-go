@@ -9,8 +9,8 @@
 package log
 
 import (
-	"github.com/go-mumu/cs-go/log/handler"
-	"github.com/go-mumu/cs-go/log/writer"
+	handler2 "github.com/go-mumu/cs-go/library/log/handler"
+	"github.com/go-mumu/cs-go/library/log/writer"
 	"golang.org/x/exp/slog"
 	"os"
 )
@@ -20,9 +20,9 @@ var Cli *slog.Logger
 
 func init() {
 	Log = slog.New(
-		handler.NewCommonHandler(
+		handler2.NewCommonHandler(
 			writer.FileWriter(),
-			handler.CommonHandlerOpts{
+			handler2.CommonHandlerOpts{
 				Opts: slog.HandlerOptions{
 					AddSource: true,
 				},
@@ -31,9 +31,9 @@ func init() {
 	)
 
 	Cli = slog.New(
-		handler.NewTerminalHandler(
+		handler2.NewTerminalHandler(
 			os.Stdout,
-			handler.TerminalHandlerOptions{
+			handler2.TerminalHandlerOptions{
 				Opts: slog.HandlerOptions{
 					Level: slog.LevelDebug,
 				},

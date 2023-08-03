@@ -9,8 +9,9 @@
 package main
 
 import (
-	"github.com/go-mumu/cs-go/container"
-	"github.com/go-mumu/cs-go/log"
+	"github.com/go-mumu/cs-go/library/log"
+	"github.com/go-mumu/cs-go/service/container"
+	"github.com/go-mumu/cs-go/service/dal"
 	"os"
 )
 
@@ -25,7 +26,7 @@ func main() {
 	defer cleanfunc()
 
 	// gen default mysql models
-	// dal.GenDefModels(app.DefMysql.DB)
+	dal.GenDefModels(app.DefMysql.DB)
 
 	err = app.Run()
 	if err != nil {

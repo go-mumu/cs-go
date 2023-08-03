@@ -14,7 +14,7 @@ var ConfPath string
 var LogPath string
 
 func init() {
-	flag.StringVar(&ConfPath, "c", "./config/file/local.toml", "-c set config path")
+	flag.StringVar(&ConfPath, "c", "./config/local.toml", "-c set config path")
 	flag.StringVar(&LogPath, "l", "./log.log", "-l set log path")
 	flag.Parse()
 }

@@ -10,9 +10,7 @@ package server
 
 import (
 	"fmt"
-	"github.com/go-mumu/cs-go/handler"
-	"github.com/go-mumu/cs-go/log"
-	"github.com/go-mumu/cs-go/proto/pb"
+	"github.com/go-mumu/cs-go/library/log"
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/net/context"
@@ -330,20 +328,5 @@ func (s *Server) wait() error {
 		return fmt.Errorf("server closed got signal %s, shutdown success", sig)
 	case err = <-s.errChan:
 		return fmt.Errorf("server closed %s", err)
-	}
-}
-
-func Serve() {
-	lis, err := net.Listen("tcp", ":8000")
-	if err != nil {
-		log.Cli.Info("listen failed")
-	}
-
-	s := grpc.NewServer()
-
-	pb.RegisterUserServiceServer(s, &handler.UserServiceHandler{})
-
-	if err = s.Serve(lis); err != nil {
-		log.Cli.Info("grpc serve failed")
 	}
 }

@@ -10,8 +10,8 @@ package handler
 
 import (
 	"context"
-	"github.com/go-mumu/cs-go/dal/dao"
 	"github.com/go-mumu/cs-go/proto/pb"
+	"github.com/go-mumu/cs-go/service/dal/dao"
 )
 
 type UserServiceHandler struct {

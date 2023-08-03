@@ -6,6 +6,7 @@ package query
 
 import (
 	"context"
+	"github.com/go-mumu/cs-go/service/dal/model"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -15,8 +16,6 @@ import (
 	"gorm.io/gen/field"
 
 	"gorm.io/plugin/dbresolver"
-
-	"github.com/go-mumu/cs-go/dal/model"
 )
 
 func newWxuser(db *gorm.DB, opts ...gen.DOOption) wxuser {

@@ -10,9 +10,9 @@ package mysql
 
 import (
 	"fmt"
-	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/log"
-	"github.com/go-mumu/cs-go/log/writer"
+	"github.com/go-mumu/cs-go/library/config"
+	"github.com/go-mumu/cs-go/library/log"
+	"github.com/go-mumu/cs-go/library/log/writer"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

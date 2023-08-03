@@ -9,7 +9,7 @@
 package provider
 
 import (
-	"github.com/go-mumu/cs-go/handler"
+	"github.com/go-mumu/cs-go/service/handler"
 	"github.com/google/wire"
 )
 

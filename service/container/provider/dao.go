@@ -9,7 +9,7 @@
 package provider
 
 import (
-	"github.com/go-mumu/cs-go/dal/dao"
+	"github.com/go-mumu/cs-go/service/dal/dao"
 	"github.com/google/wire"
 )
 

@@ -10,7 +10,7 @@ package handler
 
 import (
 	"context"
-	"github.com/go-mumu/cs-go/common/consts"
+	"github.com/go-mumu/cs-go/library/common/consts"
 	"golang.org/x/exp/slog"
 	"io"
 )

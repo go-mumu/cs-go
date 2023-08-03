@@ -8,8 +8,8 @@ package container
 
 import (
 	"github.com/go-mumu/cs-go/api/container/provider"
-	"github.com/go-mumu/cs-go/config"
-	"github.com/go-mumu/cs-go/redis"
+	"github.com/go-mumu/cs-go/library/config"
+	"github.com/go-mumu/cs-go/library/redis"
 )
 
 // Injectors from injector.go:

@@ -9,7 +9,7 @@
 package provider
 
 import (
-	"github.com/go-mumu/cs-go/config"
+	"github.com/go-mumu/cs-go/library/config"
 	"github.com/redis/go-redis/v9"
 )
 

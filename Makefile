@@ -2,11 +2,17 @@ GOPATH:=$(shell go env GOPATH)
 
 .PHONY:local
 local:
-	@go run server.go -c "./config/file/local.toml" -l "./log.log"
+	@go run server.go -c "./config/local.toml" -l "./log.log"
 
-.PHONY:inject
-inject:
-	cd ./container && wire
+# api 依赖注入
+.PHONY:inject-api
+inject-service:
+	cd ./service/container && wire
+
+# service 依赖注入
+.PHONY:inject-api
+inject-api:
+	cd ./api/container && wire
 
 .PHONY:proto
 proto:

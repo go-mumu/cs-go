@@ -10,7 +10,7 @@ package writer
 
 import (
 	"fmt"
-	"github.com/go-mumu/cs-go/common/flags"
+	"github.com/go-mumu/cs-go/library/common/flags"
 	"os"
 	"path"
 )

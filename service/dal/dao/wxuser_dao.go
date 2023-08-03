@@ -10,8 +10,8 @@ package dao
 
 import (
 	"context"
-	"github.com/go-mumu/cs-go/dal/model"
-	"github.com/go-mumu/cs-go/mysql"
+	"github.com/go-mumu/cs-go/library/mysql"
+	"github.com/go-mumu/cs-go/service/dal/model"
 )
 
 type WxuserDao struct {
