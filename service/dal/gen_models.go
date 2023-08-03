@@ -16,9 +16,9 @@ import "gorm.io/gen"
 // GenDefModels gen default models
 func GenDefModels(db *gorm.DB) {
 	cfg := gen.Config{
-		OutPath:      "./dal/query",
+		OutPath:      "./service/dal/query",
 		OutFile:      "defGen.go",
-		ModelPkgPath: "./dal/model",
+		ModelPkgPath: "./service/dal/model",
 
 		FieldNullable:    true,
 		FieldCoverable:   true,
