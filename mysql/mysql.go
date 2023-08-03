@@ -45,6 +45,9 @@ func InitDef(config *config.Config) *DefMysql {
 	sqlDB.SetConnMaxIdleTime(time.Minute * 10)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
+	// connect success
+	log.Cli.Info("mysql connect success.")
+
 	return &DefMysql{db}
 }
 

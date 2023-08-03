@@ -16,12 +16,15 @@ import (
 )
 
 func InitRedis(conf *config.Config) *redis.Client {
-	log.Cli.Info("redis connect")
-
-	return redis.NewClient(&redis.Options{
+	client := redis.NewClient(&redis.Options{
 		Addr:         conf.DefRedis.Host,
 		DB:           conf.DefRedis.Database,
 		ReadTimeout:  time.Duration(conf.DefRedis.ReadTimeoutMs) * time.Millisecond,
 		WriteTimeout: time.Duration(conf.DefRedis.WriteTimeoutMs) * time.Millisecond,
 	})
+
+	// connect success
+	log.Cli.Info("redis connect success.")
+
+	return client
 }

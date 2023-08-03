@@ -10,8 +10,13 @@ import (
 	"github.com/go-mumu/cs-go/config"
 	"github.com/go-mumu/cs-go/container/provider"
 	"github.com/go-mumu/cs-go/dal/dao"
+	"github.com/go-mumu/cs-go/handler"
 	"github.com/go-mumu/cs-go/mysql"
+	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/server"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 )
 
 // Injectors from injector.go:
@@ -20,16 +25,51 @@ import (
 func InitApp() (*App, func(), error) {
 	configConfig := config.Init()
 	defMysql := mysql.InitDef(configConfig)
-	wxuserDao := dao.NewWxuserDao(defMysql)
-	providerDao := &provider.Dao{
-		WxuserDao: wxuserDao,
-	}
 	serverServer := server.NewServer()
+	wxuserDao := dao.NewWxuserDao(defMysql)
+	userServiceHandler := handler.NewUserServiceHandler(wxuserDao)
+	providerHandler := provider.NewHandler(userServiceHandler)
 	app := &App{
 		DefMysql: defMysql,
-		Dao:      providerDao,
 		Server:   serverServer,
+		Handler:  providerHandler,
 	}
 	return app, func() {
 	}, nil
+}
+
+// injector.go:
+
+// App 全局应用程序
+type App struct {
+	DefMysql *mysql.DefMysql
+	Server   *server.Server
+	Handler  *provider.Handler
+}
+
+func (a *App) Run() error {
+	a.Server.SetGrpcAddr(config.C.Rpc.GrpcAddr)
+	a.Server.SetHttpAddr(config.C.Rpc.HttpAddr)
+
+	a.Server.SetGrpcHandlerTimeout(config.C.Rpc.GrpcHandlerTimeout)
+
+	a.Server.SetHttpReadTimeout(config.C.Rpc.HttpReadTimeout)
+	a.Server.SetHttpWriteTimeout(config.C.Rpc.HttpWriteTimeout)
+
+	a.Server.SetGrpcIdleTimeout(config.C.Rpc.GrpcIdleTimeout)
+	a.Server.SetHttpIdleTimeout(config.C.Rpc.HttpIdleTimeout)
+
+	a.Server.SetMaxBodySize(config.C.Rpc.MaxBodySize)
+
+	a.Server.SetGrpcRegister(func(s *grpc.Server) {
+		pb.RegisterUserServiceServer(s, a.Handler.UserServiceHandler)
+	})
+
+	a.Server.SetHttpRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {
+		return server.HttpRegisterFunc(ctx, mux, endpoint, opts,
+			[]server.HttpRegister{pb.RegisterUserServiceHandlerFromEndpoint}...,
+		)
+	})
+
+	return a.Server.Run()
 }
