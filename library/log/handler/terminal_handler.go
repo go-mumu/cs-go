@@ -40,8 +40,6 @@ func (h *TerminalHandler) Handle(ctx context.Context, r slog.Record) error {
 		level = color.RedString(level)
 	}
 
-	r.Add("trace_id", ctx.Value("trace_id"))
-
 	fields := make(map[string]interface{}, r.NumAttrs())
 	r.Attrs(func(a slog.Attr) bool {
 		fields[a.Key] = a.Value.Any()
@@ -49,7 +47,7 @@ func (h *TerminalHandler) Handle(ctx context.Context, r slog.Record) error {
 		return true
 	})
 
-	b, err := json.MarshalIndent(fields, "", "  ")
+	b, err := json.Marshal(fields)
 	if err != nil {
 		return err
 	}
