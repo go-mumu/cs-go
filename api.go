@@ -20,7 +20,7 @@ func main() {
 
 	r := gin.Default()
 
-	router.Router(r, app.RedisClient)
+	router.Router(r, app)
 
 	err = r.Run(":8888")
 	if err != nil {

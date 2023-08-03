@@ -15,14 +15,18 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-type Clients struct {
+type ServiceClient struct {
 }
 
-func (c *Clients) UserClient(ctx context.Context) pb.UserServiceClient {
+func NewServiceClient() *ServiceClient {
+	return &ServiceClient{}
+}
+
+func (c *ServiceClient) UserClient(ctx context.Context) pb.UserServiceClient {
 	return pb.NewUserServiceClient(c.grpcDial(ctx))
 }
 
-func (c *Clients) grpcDial(ctx context.Context) *grpc.ClientConn {
+func (c *ServiceClient) grpcDial(ctx context.Context) *grpc.ClientConn {
 	conn, err := grpc.DialContext(ctx, "127.0.0.1:8992", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil

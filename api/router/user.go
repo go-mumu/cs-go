@@ -10,14 +10,13 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/go-mumu/cs-go/api/controller"
+	"github.com/go-mumu/cs-go/api/container"
 	"github.com/go-mumu/cs-go/api/middleware"
-	"github.com/redis/go-redis/v9"
 )
 
-func UserRouter(api *gin.RouterGroup, redisClient *redis.Client) {
-	user := api.Group("/user", middleware.AuthToken(redisClient))
+func UserRouter(api *gin.RouterGroup, app *container.App) {
+	user := api.Group("/user", middleware.AuthToken(app.RedisClient))
 	{
-		user.POST("isVip", controller.NewUserController().IsVip)
+		user.POST("isVip", app.Controller.UserController.IsVip)
 	}
 }

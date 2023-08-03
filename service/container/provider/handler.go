@@ -14,8 +14,8 @@ import (
 )
 
 var HandlerProviderSet = wire.NewSet(
-	wire.NewSet(NewHandler),
-	wire.NewSet(handler.NewUserServiceHandler),
+	NewHandler,
+	handler.NewUserServiceHandler,
 )
 
 type Handler struct {

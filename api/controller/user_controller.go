@@ -18,10 +18,15 @@ import (
 )
 
 type UserController struct {
+	ServiceClient *client.ServiceClient
 }
 
-func NewUserController() *UserController {
-	return &UserController{}
+func NewUserController(
+	serviceClient *client.ServiceClient,
+) *UserController {
+	return &UserController{
+		ServiceClient: serviceClient,
+	}
 }
 
 func (u *UserController) IsVip(c *gin.Context) {
@@ -30,9 +35,7 @@ func (u *UserController) IsVip(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(c.Request.Context(), 5000*time.Millisecond)
 	defer cancel()
 
-	cli := new(client.Clients)
-
-	res, _ := cli.UserClient(ctx).IsVip(ctx, &pb.IsVipReq{Mid: mid})
+	res, _ := u.ServiceClient.UserClient(ctx).IsVip(ctx, &pb.IsVipReq{Mid: mid})
 	/*var isVipReq pb.IsVipReq
 
 	_ = c.ShouldBind(&isVipReq)

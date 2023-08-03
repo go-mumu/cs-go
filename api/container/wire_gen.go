@@ -7,6 +7,9 @@
 package container
 
 import (
+	"github.com/go-mumu/cs-go/api/client"
+	"github.com/go-mumu/cs-go/api/container/provider"
+	"github.com/go-mumu/cs-go/api/controller"
 	"github.com/go-mumu/cs-go/library/config"
 	"github.com/go-mumu/cs-go/library/redis"
 	redis2 "github.com/redis/go-redis/v9"
@@ -16,10 +19,14 @@ import (
 
 func InitApp() (*App, func(), error) {
 	configConfig := config.Init()
-	client := redis.InitRedis(configConfig)
+	redisClient := redis.InitRedis(configConfig)
+	serviceClient := client.NewServiceClient()
+	userController := controller.NewUserController(serviceClient)
+	providerController := provider.NewController(userController)
 	app := &App{
 		Config:      configConfig,
-		RedisClient: client,
+		RedisClient: redisClient,
+		Controller:  providerController,
 	}
 	return app, func() {
 	}, nil
@@ -30,4 +37,5 @@ func InitApp() (*App, func(), error) {
 type App struct {
 	Config      *config.Config
 	RedisClient *redis2.Client
+	Controller  *provider.Controller
 }

@@ -10,11 +10,11 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/redis/go-redis/v9"
+	"github.com/go-mumu/cs-go/api/container"
 )
 
-func Router(router *gin.Engine, redisClient *redis.Client) {
+func Router(router *gin.Engine, app *container.App) {
 	api := router.Group("/api")
 
-	UserRouter(api, redisClient)
+	UserRouter(api, app)
 }
