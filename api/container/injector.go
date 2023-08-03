@@ -11,17 +11,22 @@
 package container
 
 import (
-	"github.com/go-mumu/cs-go/api/container/provider"
 	"github.com/go-mumu/cs-go/library/config"
-	"github.com/go-mumu/cs-go/library/redis"
+	libRedis "github.com/go-mumu/cs-go/library/redis"
 	"github.com/google/wire"
+	"github.com/redis/go-redis/v9"
 )
 
-func InitApp() (*provider.App, func(), error) {
+type App struct {
+	Config      *config.Config
+	RedisClient *redis.Client
+}
+
+func InitApp() (*App, func(), error) {
 	panic(
 		wire.Build(
-			wire.Struct(new(provider.App), "*"),
-			redis.InitRedis,
+			wire.Struct(new(App), "*"),
+			libRedis.InitRedis,
 			config.Init,
 		),
 	)
