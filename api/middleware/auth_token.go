@@ -24,7 +24,7 @@ type UserInfo struct {
 	XcxOpenId string `json:"xcx_openid"`
 }
 
-func Login(client *redis.Client) gin.HandlerFunc {
+func AuthToken(client *redis.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if authMiniProgramToken(c, client) {
 			c.Next()
