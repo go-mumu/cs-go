@@ -18,9 +18,7 @@ func main() {
 	app, cleanfunc, err := container.InitApp()
 	defer cleanfunc()
 
-	r := gin.New()
-
-	r.Use(gin.Logger(), gin.Recovery())
+	r := gin.Default()
 
 	router.Router(r, app.RedisClient)
 
