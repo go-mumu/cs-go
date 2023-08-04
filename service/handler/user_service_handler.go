@@ -10,6 +10,7 @@ package handler
 
 import (
 	"context"
+	"github.com/go-mumu/cs-go/library/log"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/service/dal/dao"
 )
@@ -19,17 +20,15 @@ type UserServiceHandler struct {
 	WxuserDao *dao.WxuserDao
 }
 
-func NewUserServiceHandler(
-	wxuserDao *dao.WxuserDao,
-) *UserServiceHandler {
-	return &UserServiceHandler{
-		WxuserDao: wxuserDao,
-	}
+func NewUserServiceHandler(wxuserDao *dao.WxuserDao) *UserServiceHandler {
+	return &UserServiceHandler{WxuserDao: wxuserDao}
 }
 
 func (h *UserServiceHandler) IsVip(ctx context.Context, req *pb.IsVipReq) (*pb.IsVipRes, error) {
 
 	userInfo := h.WxuserDao.GetUserInfoByMid(ctx, req.Mid)
+
+	log.Log.InfoContext(ctx, "is vip trace")
 
 	return &pb.IsVipRes{
 		Vip7:        userInfo.Vip7,

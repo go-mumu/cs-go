@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-28
  * File: api.go
- * Desc:
+ * Desc: main api
  */
 
 package main
@@ -22,8 +22,7 @@ func main() {
 
 	router.Router(r, app)
 
-	err = r.Run(":8888")
-	if err != nil {
+	if err = r.Run(":8888"); err != nil {
 		return
 	}
 }

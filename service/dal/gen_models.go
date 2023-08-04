@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-26
  * File: gen_models.go
- * Desc:
+ * Desc: generate model
  */
 
 package dal
