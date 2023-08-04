@@ -3,7 +3,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-07-28
  * File: login.go
- * Desc: 验证登陆
+ * Desc: auth token middleware
  */
 
 package middleware
@@ -51,8 +51,6 @@ func authMiniProgramToken(c *gin.Context, client *redis.Client) bool {
 	if err = json.Unmarshal([]byte(response.Val()), &userInfo); err != nil {
 		return false
 	}
-
-	log.Log.Info("log", "user info", userInfo, "redis val", response.Val())
 
 	c.Set("mid", userInfo.Mid)
 	c.Set("xcx_openid", userInfo.XcxOpenId)
