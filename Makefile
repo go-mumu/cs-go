@@ -7,12 +7,16 @@ local:
 # api 依赖注入
 .PHONY:inject-api
 inject-service:
-	cd ./service/container && wire
+	@wire ./service/container &&
 
 # service 依赖注入
 .PHONY:inject-api
 inject-api:
-	cd ./api/container && wire
+	@wire ./api/container
+
+.PHONY:gen-model
+gen-model:
+	@go run ./service/cli/main.go gen-model
 
 .PHONY:proto
 proto:
