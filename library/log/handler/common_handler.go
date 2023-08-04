@@ -12,6 +12,7 @@ import (
 	"context"
 	"github.com/go-mumu/cs-go/library/common/consts"
 	"golang.org/x/exp/slog"
+	"google.golang.org/grpc/metadata"
 	"io"
 )
 
@@ -24,7 +25,23 @@ type CommonHandlerOpts struct {
 }
 
 func (h *CommonHandler) Handle(ctx context.Context, r slog.Record) error {
-	r.Add(consts.TraceId, ctx.Value(consts.TraceId))
+	traceId := ""
+
+	if outMd, ok := metadata.FromOutgoingContext(ctx); ok {
+		if sliceTraceId := outMd.Get(consts.TraceId); len(sliceTraceId) > 0 {
+			traceId = sliceTraceId[0]
+		}
+	}
+
+	if inMd, ok := metadata.FromIncomingContext(ctx); ok {
+		if sliceTraceId := inMd.Get(consts.TraceId); len(sliceTraceId) > 0 {
+			traceId = sliceTraceId[0]
+		}
+	}
+
+	if traceId != "" {
+		r.Add(consts.TraceId, traceId)
+	}
 
 	err := h.Handler.Handle(ctx, r)
 	if err != nil {
@@ -36,6 +53,6 @@ func (h *CommonHandler) Handle(ctx context.Context, r slog.Record) error {
 
 func NewCommonHandler(out io.Writer, opts CommonHandlerOpts) *CommonHandler {
 	return &CommonHandler{
-		Handler: slog.NewJSONHandler(out, &opts.Opts),
+		Handler: slog.NewTextHandler(out, &opts.Opts),
 	}
 }
