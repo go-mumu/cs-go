@@ -19,9 +19,10 @@ var (
 )
 
 type Config struct {
-	DefMysql *MysqlConf `toml:"mysql_def" mapstructure:"mysql_def"`
-	Rpc      *RpcConf   `toml:"rpc" mapstructure:"rpc"`
-	DefRedis *RedisConf `toml:"redis" mapstructure:"redis"`
+	DefMysql *MysqlConf  `toml:"mysql_def" mapstructure:"mysql_def"`
+	Rpc      *RpcConf    `toml:"rpc" mapstructure:"rpc"`
+	Client   *ClientConf `toml:"client" mapstructure:"client"`
+	DefRedis *RedisConf  `toml:"redis" mapstructure:"redis"`
 }
 
 // MysqlConf Mysql配置
@@ -57,6 +58,11 @@ type RpcConf struct {
 	HttpIdleTimeout    int    `toml:"http_idle_timeout" mapstructure:"http_idle_timeout"`       // Keep-alive timeout(ms), default 60000
 	GrpcIdleTimeout    int    `toml:"grpc_idle_timeout" mapstructure:"grpc_idle_timeout"`       // grpc Keep-alive timeout(ms), default 60000
 	MaxBodySize        int    `toml:"max_body_size" mapstructure:"max_body_size"`               // grpc 能处理的最大bodysize 20M
+}
+
+// ClientConf 配置
+type ClientConf struct {
+	ServiceAddr string `toml:"service_addr" mapstructure:"service_addr"`
 }
 
 // Init 注入初始化配置文件
