@@ -11,22 +11,18 @@ package main
 import (
 	"github.com/go-mumu/cs-go/library/log"
 	"github.com/go-mumu/cs-go/service/container"
-	"github.com/go-mumu/cs-go/service/dal"
 	"os"
 )
 
 func main() {
 	// init app
 	app, cleanfunc, err := container.InitApp()
+	defer cleanfunc()
+
 	if err != nil {
 		log.Cli.Info("init app failed")
 		os.Exit(1)
 	}
-
-	defer cleanfunc()
-
-	// gen default mysql models
-	dal.GenDefModels(app.DefMysql.DB)
 
 	err = app.Run()
 	if err != nil {
