@@ -20,7 +20,7 @@ import (
 func InitApp() (*App, func(), error) {
 	configConfig := config.Init()
 	redisClient := redis.InitRedis(configConfig)
-	serviceClient := client.NewServiceClient()
+	serviceClient := client.NewServiceClient(configConfig)
 	userController := controller.NewUserController(serviceClient)
 	providerController := provider.NewController(userController)
 	app := &App{

@@ -5,7 +5,7 @@
  * User: liyw<634482545@qq.com>
  * Date: 2023-08-02
  * File: injector.go
- * Desc:
+ * Desc: inject
  */
 
 package container
