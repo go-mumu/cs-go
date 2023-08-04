@@ -11,10 +11,12 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-mumu/cs-go/api/container"
+	"github.com/go-mumu/cs-go/api/middleware"
 )
 
 func Router(router *gin.Engine, app *container.App) {
-	api := router.Group("/api")
+
+	api := router.Group("/api", middleware.Trace())
 
 	UserRouter(api, app)
 }

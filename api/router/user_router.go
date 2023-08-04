@@ -15,6 +15,7 @@ import (
 )
 
 func UserRouter(api *gin.RouterGroup, app *container.App) {
+
 	user := api.Group("/user", middleware.AuthToken(app.RedisClient))
 	{
 		user.POST("isVip", app.Controller.UserController.IsVip)
