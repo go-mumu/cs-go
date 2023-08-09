@@ -33,3 +33,9 @@ grpc_idle_timeout = 120000
 
 [client]
 service_addr = "127.0.0.1"
+
+[domain]
+center = "https://test-internal-open.weimiaocaishang.com"
+
+[interest]
+code = "QY20220428001"

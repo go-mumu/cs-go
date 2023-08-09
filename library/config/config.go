@@ -19,10 +19,12 @@ var (
 )
 
 type Config struct {
-	DefMysql *MysqlConf  `toml:"mysql_def" mapstructure:"mysql_def"`
-	Rpc      *RpcConf    `toml:"rpc" mapstructure:"rpc"`
-	Client   *ClientConf `toml:"client" mapstructure:"client"`
-	DefRedis *RedisConf  `toml:"redis" mapstructure:"redis"`
+	DefMysql *MysqlConf    `toml:"mysql_def" mapstructure:"mysql_def"`
+	DefRedis *RedisConf    `toml:"redis" mapstructure:"redis"`
+	Rpc      *RpcConf      `toml:"rpc" mapstructure:"rpc"`
+	Client   *ClientConf   `toml:"client" mapstructure:"client"`
+	Domain   *DomainConf   `toml:"domain" mapstructure:"domain"`
+	Interest *InterestConf `toml:"interest" mapstructure:"interest"`
 }
 
 // MysqlConf Mysql配置
@@ -63,6 +65,16 @@ type RpcConf struct {
 // ClientConf 配置
 type ClientConf struct {
 	ServiceAddr string `toml:"service_addr" mapstructure:"service_addr"`
+}
+
+// DomainConf 配置
+type DomainConf struct {
+	Center string `toml:"center" mapstructure:"center"`
+}
+
+// InterestConf 权益配置
+type InterestConf struct {
+	Code string `toml:"code" maostructure:"code"`
 }
 
 // Init 注入初始化配置文件

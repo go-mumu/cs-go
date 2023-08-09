@@ -13,10 +13,14 @@ import (
 	"github.com/go-mumu/cs-go/library/log"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/service/dal/dao"
+	"github.com/go-mumu/cs-go/service/dal/third/central/interest"
+	"strconv"
+	"time"
 )
 
 type UserServiceHandler struct {
 	pb.UnimplementedUserServiceServer
+	interest.Interest
 	WxuserDao *dao.WxuserDao
 }
 
@@ -28,13 +32,20 @@ func (h *UserServiceHandler) IsVip(ctx context.Context, req *pb.IsVipReq) (*pb.I
 
 	userInfo := h.WxuserDao.GetUserInfoByMid(ctx, req.Mid)
 
-	log.Log.InfoContext(ctx, "is vip trace")
+	log.Log.InfoContext(ctx, "user", userInfo)
+
+	userInterest := h.UserInterest(ctx, strconv.FormatInt(req.Mid, 10))
+
+	var overdue int32 = 0
+	if parseTime, _ := time.ParseInLocation(time.DateTime, userInterest["interest_end"]+" 23:59:59", time.Local); parseTime.After(time.Now()) {
+		overdue = 1
+	}
 
 	return &pb.IsVipRes{
 		Vip7:        userInfo.Vip7,
-		Overdue:     0,
+		Overdue:     overdue,
 		Type:        "",
-		Viptime:     "2022",
-		Vipvalidity: "",
+		Viptime:     userInfo.Createtime.String(),
+		Vipvalidity: userInterest["interest_end"] + " 23:59:59",
 	}, nil
 }

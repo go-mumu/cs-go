@@ -28,6 +28,15 @@ func GenDefModels(db *gorm.DB) {
 
 	g := gen.NewGenerator(cfg)
 
+	var dataMap = map[string]func(gorm.ColumnType) (dataType string){
+		// bool mapping
+		"datetime": func(columnType gorm.ColumnType) (dataType string) {
+			return "datetime.Datetime"
+		},
+	}
+
+	g.WithDataTypeMap(dataMap)
+
 	g.UseDB(db)
 
 	g.ApplyBasic(g.GenerateModel("wxuser"))

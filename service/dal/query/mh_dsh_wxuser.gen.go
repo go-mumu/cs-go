@@ -39,16 +39,16 @@ func newWxuser(db *gorm.DB, opts ...gen.DOOption) wxuser {
 	_wxuser.Province = field.NewString(tableName, "province")
 	_wxuser.Points = field.NewInt32(tableName, "points")
 	_wxuser.Long = field.NewInt32(tableName, "long")
-	_wxuser.Longtime = field.NewTime(tableName, "longtime")
+	_wxuser.Longtime = field.NewField(tableName, "longtime")
 	_wxuser.URL = field.NewString(tableName, "url")
 	_wxuser.Vip7 = field.NewInt32(tableName, "vip7")
-	_wxuser.Viptime = field.NewTime(tableName, "viptime")
-	_wxuser.Vipvalidity = field.NewTime(tableName, "vipvalidity")
-	_wxuser.Createtime = field.NewTime(tableName, "createtime")
+	_wxuser.Viptime = field.NewField(tableName, "viptime")
+	_wxuser.Vipvalidity = field.NewField(tableName, "vipvalidity")
+	_wxuser.Createtime = field.NewField(tableName, "createtime")
 	_wxuser.SubChannel = field.NewString(tableName, "sub_channel")
-	_wxuser.SubChannelTime = field.NewTime(tableName, "sub_channel_time")
+	_wxuser.SubChannelTime = field.NewField(tableName, "sub_channel_time")
 	_wxuser.XcxSubChannel = field.NewString(tableName, "xcx_sub_channel")
-	_wxuser.XcxSubChannelTime = field.NewTime(tableName, "xcx_sub_channel_time")
+	_wxuser.XcxSubChannelTime = field.NewField(tableName, "xcx_sub_channel_time")
 	_wxuser.BookChannel = field.NewString(tableName, "book_channel")
 	_wxuser.UserChannel = field.NewInt32(tableName, "user_channel")
 	_wxuser.UserType = field.NewInt32(tableName, "user_type")
@@ -75,16 +75,16 @@ type wxuser struct {
 	Province          field.String // 省份
 	Points            field.Int32  // 积分
 	Long              field.Int32  // 邀请人ID
-	Longtime          field.Time   // 邀请时间
+	Longtime          field.Field  // 邀请时间
 	URL               field.String // 头像
 	Vip7              field.Int32  // 是否领取过vip
-	Viptime           field.Time   // 成为vip时间
-	Vipvalidity       field.Time   // vip有效时间
-	Createtime        field.Time   // 添加时间
+	Viptime           field.Field  // 成为vip时间
+	Vipvalidity       field.Field  // vip有效时间
+	Createtime        field.Field  // 添加时间
 	SubChannel        field.String // 关注渠道号 默认：1000
-	SubChannelTime    field.Time   // 关注渠道修改时间
+	SubChannelTime    field.Field  // 关注渠道修改时间
 	XcxSubChannel     field.String // 小程序关注渠道号 默认：1000
-	XcxSubChannelTime field.Time   // 小程序关注渠道修改时间
+	XcxSubChannelTime field.Field  // 小程序关注渠道修改时间
 	BookChannel       field.String // 新渠道号 默认：1000
 	UserChannel       field.Int32  // 1小白营
 	UserType          field.Int32  // 1裂变新用户
@@ -117,16 +117,16 @@ func (w *wxuser) updateTableName(table string) *wxuser {
 	w.Province = field.NewString(table, "province")
 	w.Points = field.NewInt32(table, "points")
 	w.Long = field.NewInt32(table, "long")
-	w.Longtime = field.NewTime(table, "longtime")
+	w.Longtime = field.NewField(table, "longtime")
 	w.URL = field.NewString(table, "url")
 	w.Vip7 = field.NewInt32(table, "vip7")
-	w.Viptime = field.NewTime(table, "viptime")
-	w.Vipvalidity = field.NewTime(table, "vipvalidity")
-	w.Createtime = field.NewTime(table, "createtime")
+	w.Viptime = field.NewField(table, "viptime")
+	w.Vipvalidity = field.NewField(table, "vipvalidity")
+	w.Createtime = field.NewField(table, "createtime")
 	w.SubChannel = field.NewString(table, "sub_channel")
-	w.SubChannelTime = field.NewTime(table, "sub_channel_time")
+	w.SubChannelTime = field.NewField(table, "sub_channel_time")
 	w.XcxSubChannel = field.NewString(table, "xcx_sub_channel")
-	w.XcxSubChannelTime = field.NewTime(table, "xcx_sub_channel_time")
+	w.XcxSubChannelTime = field.NewField(table, "xcx_sub_channel_time")
 	w.BookChannel = field.NewString(table, "book_channel")
 	w.UserChannel = field.NewInt32(table, "user_channel")
 	w.UserType = field.NewInt32(table, "user_type")

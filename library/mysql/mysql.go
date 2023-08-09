@@ -45,6 +45,8 @@ func InitDef(config *config.Config) *DefMysql {
 	sqlDB.SetConnMaxIdleTime(time.Minute * 10)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
+	schema.RegisterSerializer("json", JSONSerializer{})
+
 	// connect success
 	log.Cli.Info("mysql connect success.")
 
