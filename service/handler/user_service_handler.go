@@ -10,7 +10,6 @@ package handler
 
 import (
 	"context"
-	"github.com/go-mumu/cs-go/library/log"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/service/dal/dao"
 	"github.com/go-mumu/cs-go/service/dal/third/central/interest"
@@ -31,8 +30,6 @@ func NewUserServiceHandler(wxuserDao *dao.WxuserDao) *UserServiceHandler {
 func (h *UserServiceHandler) IsVip(ctx context.Context, req *pb.IsVipReq) (*pb.IsVipRes, error) {
 
 	userInfo := h.WxuserDao.GetUserInfoByMid(ctx, req.Mid)
-
-	log.Log.InfoContext(ctx, "user", userInfo)
 
 	userInterest := h.UserInterest(ctx, strconv.FormatInt(req.Mid, 10))
 

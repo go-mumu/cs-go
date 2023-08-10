@@ -11,7 +11,6 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-mumu/cs-go/api/client"
-	"github.com/go-mumu/cs-go/library/log"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"net/http"
 )
@@ -28,8 +27,6 @@ func (u *UserController) IsVip(c *gin.Context) {
 	mid := c.GetInt64("mid")
 
 	ctx := c.Request.Context()
-
-	log.Log.InfoContext(ctx, "log trace id")
 
 	res, _ := u.ServiceClient.UserClient().IsVip(ctx, &pb.IsVipReq{Mid: mid})
 
