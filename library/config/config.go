@@ -8,13 +8,7 @@
 
 package config
 
-import (
-	"github.com/go-mumu/cs-go/library/common/flags"
-	"github.com/go-mumu/cs-go/library/log"
-	"github.com/spf13/viper"
-)
-
-var (
+/*var (
 	C *Config
 )
 
@@ -97,4 +91,4 @@ func Init() *Config {
 	}
 
 	return C
-}
+}*/
