@@ -23,8 +23,7 @@ func Init() *redis.Client {
 		WriteTimeout: time.Duration(config.V.GetInt("redis.write_timeout_ms")) * time.Millisecond,
 	})
 
-	// connect success
-	log.Cli.Info("redis connect success.")
+	log.Cli.Info("init redis success.")
 
 	return client
 }

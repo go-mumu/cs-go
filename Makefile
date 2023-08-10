@@ -2,7 +2,7 @@ GOPATH:=$(shell go env GOPATH)
 
 .PHONY:local
 local:
-	@go run server.go -c "./config/local.toml" -l "./log.log"
+	@go run server.go -l './log.log' -consul '{"addr": "http://127.0.0.1:8500", "config_path": "config/local"}'
 
 # api 依赖注入
 .PHONY:inject-service

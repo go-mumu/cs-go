@@ -40,4 +40,6 @@ func init() {
 			},
 		),
 	)
+
+	Cli.Info("init log success.")
 }

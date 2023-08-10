@@ -47,8 +47,7 @@ func InitDef() *DefMysql {
 
 	schema.RegisterSerializer("json", JSONSerializer{})
 
-	// connect success
-	log.Cli.Info("mysql connect success.")
+	log.Cli.Info("init mysql success.")
 
 	return &DefMysql{db}
 }

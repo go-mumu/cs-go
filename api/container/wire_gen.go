@@ -10,7 +10,6 @@ import (
 	"github.com/go-mumu/cs-go/api/client"
 	"github.com/go-mumu/cs-go/api/container/provider"
 	"github.com/go-mumu/cs-go/api/controller"
-	"github.com/go-mumu/cs-go/library/config"
 	"github.com/go-mumu/cs-go/library/redis"
 	redis2 "github.com/redis/go-redis/v9"
 )
@@ -18,13 +17,11 @@ import (
 // Injectors from injector.go:
 
 func InitApp() (*App, func(), error) {
-	configConfig := config.Init()
-	redisClient := redis.InitRedis(configConfig)
-	serviceClient := client.NewServiceClient(configConfig)
+	redisClient := redis.Init()
+	serviceClient := client.NewServiceClient()
 	userController := controller.NewUserController(serviceClient)
 	providerController := provider.NewController(userController)
 	app := &App{
-		Config:      configConfig,
 		RedisClient: redisClient,
 		Controller:  providerController,
 	}
@@ -35,7 +32,6 @@ func InitApp() (*App, func(), error) {
 // injector.go:
 
 type App struct {
-	Config      *config.Config
 	RedisClient *redis2.Client
 	Controller  *provider.Controller
 }

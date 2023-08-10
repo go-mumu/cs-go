@@ -11,6 +11,8 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-mumu/cs-go/api/client"
+	"github.com/go-mumu/cs-go/library/config"
+	"github.com/go-mumu/cs-go/library/log"
 	"github.com/go-mumu/cs-go/proto/pb"
 	"net/http"
 )
@@ -25,6 +27,8 @@ func NewUserController(serviceClient *client.ServiceClient) *UserController {
 
 func (u *UserController) IsVip(c *gin.Context) {
 	mid := c.GetInt64("mid")
+
+	log.Cli.Info("remote config", "msg", config.V.GetString("interest.msg"))
 
 	ctx := c.Request.Context()
 

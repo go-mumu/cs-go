@@ -8,13 +8,19 @@
 
 package flags
 
-import "flag"
+import (
+	"flag"
+	jsoniter "github.com/json-iterator/go"
+)
 
-var ConfPath string
+var ConsulMap map[string]string
 var LogPath string
 
 func init() {
-	flag.StringVar(&ConfPath, "c", "./config/local.toml", "-c set config path")
+	consul := flag.String("consul", `{"addr": "http://127.0.0.1:8500", "config_path": "config/local"}`, "")
+	_ = jsoniter.UnmarshalFromString(*consul, &ConsulMap)
+
 	flag.StringVar(&LogPath, "l", "./log.log", "-l set log path")
+
 	flag.Parse()
 }
