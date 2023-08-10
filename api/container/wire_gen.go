@@ -7,7 +7,6 @@
 package container
 
 import (
-	"github.com/go-mumu/cs-go/api/client"
 	"github.com/go-mumu/cs-go/api/container/provider"
 	"github.com/go-mumu/cs-go/api/controller"
 	"github.com/go-mumu/cs-go/library/redis"
@@ -17,12 +16,11 @@ import (
 // Injectors from injector.go:
 
 func InitApp() (*App, func(), error) {
-	redisClient := redis.Init()
-	serviceClient := client.NewServiceClient()
-	userController := controller.NewUserController(serviceClient)
+	client := redis.Init()
+	userController := controller.NewUserController()
 	providerController := provider.NewController(userController)
 	app := &App{
-		RedisClient: redisClient,
+		RedisClient: client,
 		Controller:  providerController,
 	}
 	return app, func() {

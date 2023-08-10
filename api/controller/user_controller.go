@@ -18,11 +18,11 @@ import (
 )
 
 type UserController struct {
-	ServiceClient *client.ServiceClient
+	*client.ServiceClient
 }
 
-func NewUserController(serviceClient *client.ServiceClient) *UserController {
-	return &UserController{ServiceClient: serviceClient}
+func NewUserController() *UserController {
+	return &UserController{}
 }
 
 func (u *UserController) IsVip(c *gin.Context) {
@@ -32,7 +32,7 @@ func (u *UserController) IsVip(c *gin.Context) {
 
 	ctx := c.Request.Context()
 
-	res, _ := u.ServiceClient.UserClient().IsVip(ctx, &pb.IsVipReq{Mid: mid})
+	res, _ := u.UserClient().IsVip(ctx, &pb.IsVipReq{Mid: mid})
 
 	c.JSON(http.StatusOK, gin.H{
 		"res": res,

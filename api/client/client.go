@@ -18,10 +18,6 @@ import (
 type ServiceClient struct {
 }
 
-func NewServiceClient() *ServiceClient {
-	return &ServiceClient{}
-}
-
 func (c *ServiceClient) UserClient() pb.UserServiceClient {
 	return pb.NewUserServiceClient(c.dial())
 }

@@ -27,7 +27,6 @@ func InitApp() (*App, func(), error) {
 		wire.Build(
 			wire.Struct(new(App), "*"),
 			libRedis.Init,
-			provider.ServiceClientProviderSet,
 			provider.ControllerProviderSet,
 		),
 	)
