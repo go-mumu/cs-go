@@ -33,7 +33,7 @@ func (i *Interest) interestList(ctx context.Context, params map[string]string) [
 	response, err := i.client(ctx).R().
 		SetQueryParams(queryParams).
 		SetHeader("h-app-id", queryParams["appId"]).
-		Get(config.C.Domain.Center + "/api/interest/query/member/interest/list")
+		Get(config.V.GetString("domain.center") + "/api/interest/query/member/interest/list")
 
 	if err != nil {
 		log.Log.InfoContext(ctx, "err", err)

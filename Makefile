@@ -5,9 +5,9 @@ local:
 	@go run server.go -c "./config/local.toml" -l "./log.log"
 
 # api 依赖注入
-.PHONY:inject-api
+.PHONY:inject-service
 inject-service:
-	@wire ./service/container &&
+	@wire ./service/container
 
 # service 依赖注入
 .PHONY:inject-api

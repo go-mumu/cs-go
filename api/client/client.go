@@ -16,13 +16,10 @@ import (
 )
 
 type ServiceClient struct {
-	Config *config.Config
 }
 
-func NewServiceClient(conf *config.Config) *ServiceClient {
-	return &ServiceClient{
-		Config: conf,
-	}
+func NewServiceClient() *ServiceClient {
+	return &ServiceClient{}
 }
 
 func (c *ServiceClient) UserClient() pb.UserServiceClient {
@@ -31,7 +28,7 @@ func (c *ServiceClient) UserClient() pb.UserServiceClient {
 
 func (c *ServiceClient) dial() *grpc.ClientConn {
 	conn, err := grpc.Dial(
-		c.Config.Client.ServiceAddr+c.Config.Rpc.GrpcAddr,
+		config.V.GetString("client.service_addr")+config.V.GetString("rpc.grpc_addr"),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {

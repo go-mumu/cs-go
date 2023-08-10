@@ -25,9 +25,9 @@ type DefMysql struct {
 	*gorm.DB
 }
 
-func InitDef(config *config.Config) *DefMysql {
+func InitDef() *DefMysql {
 	// 获取dsn
-	dsn := formatDsn(config.DefMysql)
+	dsn := formatDsn()
 
 	db := connection(dsn, &gorm.Config{
 		Logger: newLogger(),
@@ -67,18 +67,18 @@ func connection(dsn string, gormConf *gorm.Config) *gorm.DB {
 }
 
 // 格式化 Dsn
-func formatDsn(mysqlConf *config.MysqlConf) string {
+func formatDsn() string {
 	return fmt.Sprintf(
 		"%s:%s@%s(%s:%d)/%s?charset=%s&parseTime=%v&loc=%s",
-		mysqlConf.Username,
-		mysqlConf.Password,
-		mysqlConf.Protocol,
-		mysqlConf.Address,
-		mysqlConf.Port,
-		mysqlConf.Dbname,
-		mysqlConf.Charset,
-		mysqlConf.ParseTime,
-		mysqlConf.Loc,
+		config.V.GetString("mysql_def.username"),
+		config.V.GetString("mysql_def.password"),
+		config.V.GetString("mysql_def.protocol"),
+		config.V.GetString("mysql_def.address"),
+		config.V.GetInt("mysql_def.port"),
+		config.V.GetString("mysql_def.dbname"),
+		config.V.GetString("mysql_def.charset"),
+		config.V.GetBool("mysql_def.parseTime"),
+		config.V.GetString("mysql_def.loc"),
 	)
 }
 

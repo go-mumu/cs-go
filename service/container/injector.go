@@ -35,7 +35,6 @@ func InitApp() (*App, func(), error) {
 		wire.Build(
 			wire.Struct(new(App), "*"),
 			mysql.InitDef,
-			config.Init,
 			server.NewServer,
 			provider.HandlerProviderSet,
 			provider.DaoProviderSet,
@@ -44,18 +43,18 @@ func InitApp() (*App, func(), error) {
 }
 
 func (a *App) Run() error {
-	a.Server.SetGrpcAddr(config.C.Rpc.GrpcAddr)
-	a.Server.SetHttpAddr(config.C.Rpc.HttpAddr)
+	a.Server.SetGrpcAddr(config.V.GetString("rpc.grpc_addr"))
+	a.Server.SetHttpAddr(config.V.GetString("rpc.http_addr"))
 
-	a.Server.SetGrpcHandlerTimeout(config.C.Rpc.GrpcHandlerTimeout)
+	a.Server.SetGrpcHandlerTimeout(config.V.GetInt("rpc.grpc_handler_timeout"))
 
-	a.Server.SetHttpReadTimeout(config.C.Rpc.HttpReadTimeout)
-	a.Server.SetHttpWriteTimeout(config.C.Rpc.HttpWriteTimeout)
+	a.Server.SetHttpReadTimeout(config.V.GetInt("rpc.http_read_timeout"))
+	a.Server.SetHttpWriteTimeout(config.V.GetInt("rpc.http_write_timeout"))
 
-	a.Server.SetGrpcIdleTimeout(config.C.Rpc.GrpcIdleTimeout)
-	a.Server.SetHttpIdleTimeout(config.C.Rpc.HttpIdleTimeout)
+	a.Server.SetGrpcIdleTimeout(config.V.GetInt("rpc.grpc_idle_timeout"))
+	a.Server.SetHttpIdleTimeout(config.V.GetInt("rpc.http_idle_timeout"))
 
-	a.Server.SetMaxBodySize(config.C.Rpc.MaxBodySize)
+	a.Server.SetMaxBodySize(config.V.GetInt("rpc.max_body_size"))
 
 	a.Server.SetGrpcRegister(func(s *grpc.Server) {
 		pb.RegisterUserServiceServer(s, a.Handler.UserServiceHandler)

@@ -15,12 +15,12 @@ import (
 	"time"
 )
 
-func InitRedis(conf *config.Config) *redis.Client {
+func Init() *redis.Client {
 	client := redis.NewClient(&redis.Options{
-		Addr:         conf.DefRedis.Host,
-		DB:           conf.DefRedis.Database,
-		ReadTimeout:  time.Duration(conf.DefRedis.ReadTimeoutMs) * time.Millisecond,
-		WriteTimeout: time.Duration(conf.DefRedis.WriteTimeoutMs) * time.Millisecond,
+		Addr:         config.V.GetString("redis.host"),
+		DB:           config.V.GetInt("redis.database"),
+		ReadTimeout:  time.Duration(config.V.GetInt("redis.read_timeout_ms")) * time.Millisecond,
+		WriteTimeout: time.Duration(config.V.GetInt("redis.write_timeout_ms")) * time.Millisecond,
 	})
 
 	// connect success

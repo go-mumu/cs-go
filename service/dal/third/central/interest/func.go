@@ -21,7 +21,7 @@ func (i *Interest) UserInterest(ctx context.Context, mid string) map[string]stri
 
 	resp := i.interestList(ctx, map[string]string{
 		"mid":          mid,
-		"interestCode": config.C.Interest.Code,
+		"interestCode": config.V.GetString("interest.code"),
 	})
 
 	anyJson := jsoniter.Get(resp, "data")
