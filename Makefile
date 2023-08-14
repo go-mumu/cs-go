@@ -1,8 +1,32 @@
 GOPATH:=$(shell go env GOPATH)
 
-.PHONY:local
-local:
-	@go run server.go -l './log.log' -consul '{"addr": "http://127.0.0.1:8500", "config_path": "config/local"}'
+.PHONY:local-api
+local-api:
+	@go run api.go \
+		--consul-addr="http://127.0.0.1:8500" \
+		--consul-config-path="config/local"
+
+.PHONY:local-service1
+local-service1:
+	@go run server.go \
+		--log-path="./log.log" \
+		--consul-addr="http://127.0.0.1:8500" \
+		--consul-config-path="config/local" \
+		--node-ip="127.0.0.1" \
+		--node-port=9991 \
+		--node-id="node1" \
+		--http-port=10001
+
+.PHONY:local-service2
+local-service2:
+	@go run server.go \
+		--log-path="./log.log" \
+		--consul-addr="http://127.0.0.1:8500" \
+		--consul-config-path="config/local" \
+		--node-ip="127.0.0.1" \
+		--node-port=9992 \
+		--node-id="node2" \
+		--http-port=10002
 
 # api 依赖注入
 .PHONY:inject-service

@@ -23,7 +23,7 @@ func init() {
 
 	v.SetConfigType("yaml")
 
-	if err := v.AddRemoteProvider("consul", flags.ConsulMap["addr"], flags.ConsulMap["config_path"]); err != nil {
+	if err := v.AddRemoteProvider("consul", flags.ConsulAddr, flags.ConsulConfigPath); err != nil {
 		log.Cli.Error("add consul remote provider failed", "error", err)
 	}
 

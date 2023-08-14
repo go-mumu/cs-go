@@ -7,16 +7,10 @@
 package container
 
 import (
-	"github.com/go-mumu/cs-go/library/config"
 	"github.com/go-mumu/cs-go/library/mysql"
-	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/service/container/provider"
 	"github.com/go-mumu/cs-go/service/dal/dao"
 	"github.com/go-mumu/cs-go/service/handler"
-	"github.com/go-mumu/cs-go/service/server"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
 )
 
 // Injectors from injector.go:
@@ -24,13 +18,13 @@ import (
 // InitApp 注入全局应用程序
 func InitApp() (*App, func(), error) {
 	defMysql := mysql.InitDef()
-	serverServer := server.NewServer()
 	wxuserDao := dao.NewWxuserDao(defMysql)
 	userServiceHandler := handler.NewUserServiceHandler(wxuserDao)
 	providerHandler := provider.NewHandler(userServiceHandler)
+	server := provider.NewServer(providerHandler)
 	app := &App{
 		DefMysql: defMysql,
-		Server:   serverServer,
+		Server:   server,
 		Handler:  providerHandler,
 	}
 	return app, func() {
@@ -42,33 +36,6 @@ func InitApp() (*App, func(), error) {
 // App 全局应用程序
 type App struct {
 	DefMysql *mysql.DefMysql
-	Server   *server.Server
+	Server   *provider.Server
 	Handler  *provider.Handler
-}
-
-func (a *App) Run() error {
-	a.Server.SetGrpcAddr(config.V.GetString("rpc.grpc_addr"))
-	a.Server.SetHttpAddr(config.V.GetString("rpc.http_addr"))
-
-	a.Server.SetGrpcHandlerTimeout(config.V.GetInt("rpc.grpc_handler_timeout"))
-
-	a.Server.SetHttpReadTimeout(config.V.GetInt("rpc.http_read_timeout"))
-	a.Server.SetHttpWriteTimeout(config.V.GetInt("rpc.http_write_timeout"))
-
-	a.Server.SetGrpcIdleTimeout(config.V.GetInt("rpc.grpc_idle_timeout"))
-	a.Server.SetHttpIdleTimeout(config.V.GetInt("rpc.http_idle_timeout"))
-
-	a.Server.SetMaxBodySize(config.V.GetInt("rpc.max_body_size"))
-
-	a.Server.SetGrpcRegister(func(s *grpc.Server) {
-		pb.RegisterUserServiceServer(s, a.Handler.UserServiceHandler)
-	})
-
-	a.Server.SetHttpRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {
-		return server.HttpRegisterFunc(ctx, mux, endpoint, opts,
-			[]server.HttpRegister{pb.RegisterUserServiceHandlerFromEndpoint}...,
-		)
-	})
-
-	return a.Server.Run()
 }

@@ -20,12 +20,11 @@ func main() {
 	defer cleanfunc()
 
 	if err != nil {
-		log.Cli.Info("init app failed")
+		log.Cli.Error("init app failed")
 		os.Exit(1)
 	}
 
-	err = app.Run()
-	if err != nil {
-		return
+	if err = app.Server.Run(); err != nil {
+		log.Cli.Error("init server failed", "error", err)
 	}
 }

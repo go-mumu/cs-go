@@ -11,21 +11,15 @@
 package container
 
 import (
-	"github.com/go-mumu/cs-go/library/config"
 	"github.com/go-mumu/cs-go/library/mysql"
-	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/service/container/provider"
-	"github.com/go-mumu/cs-go/service/server"
 	"github.com/google/wire"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
 )
 
 // App 全局应用程序
 type App struct {
 	DefMysql *mysql.DefMysql
-	Server   *server.Server
+	Server   *provider.Server
 	Handler  *provider.Handler
 }
 
@@ -35,14 +29,14 @@ func InitApp() (*App, func(), error) {
 		wire.Build(
 			wire.Struct(new(App), "*"),
 			mysql.InitDef,
-			server.NewServer,
+			provider.NewServer,
 			provider.HandlerProviderSet,
 			provider.DaoProviderSet,
 		),
 	)
 }
 
-func (a *App) Run() error {
+/*func (a *App) Run() error {
 	a.Server.SetGrpcAddr(config.V.GetString("rpc.grpc_addr"))
 	a.Server.SetHttpAddr(config.V.GetString("rpc.http_addr"))
 
@@ -69,4 +63,4 @@ func (a *App) Run() error {
 	})
 
 	return a.Server.Run()
-}
+}*/

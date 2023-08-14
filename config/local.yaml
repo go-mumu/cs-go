@@ -15,9 +15,9 @@ redis:
   database: 0
   prefix_key: csapi_
   read_timeout_ms: 200
-  write_timeout_ms: 200
+  write_timeout_ms: 300
 
-rpc:
+rpc_config:
   grpc_addr: :8992
   http_addr: :8991
 
@@ -28,8 +28,32 @@ rpc:
 
   max_body_size: 167772160
 
-  http_idle_timeout: 120000
-  grpc_idle_timeout: 120000
+  http_idle_timeout_ms: 120000
+  grpc_idle_timeout_ms: 120000
+
+rpc:
+  # 20M(byte)
+  max_msg_size_byte: 20971520
+  # keep-alive 最大空闲时长
+  max_connection_idle_ms: 120000
+  # context.WithTimeout 默认超时时间
+  default_context_timeout_ms: 1200000
+
+  http_read_timeout_ms: 120000
+  http_write_timeout_ms: 120000
+
+  http_idle_timeout_ms: 120000
+  grpc_idle_timeout_ms: 120000
+
+service:
+  service_name: cs-go-service
+  node1:
+    id: cs-go-service1
+    name: cs-go-service
+    addr: 127.0.0.1
+    port: 8992
+    timeout: 5s
+    interval: 5s
 
 client:
   service_addr: 127.0.0.1
@@ -39,3 +63,4 @@ domain:
 
 interest:
   code: QY20220428001
+  msg: name
