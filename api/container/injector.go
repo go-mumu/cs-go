@@ -12,7 +12,6 @@ package container
 
 import (
 	"github.com/go-mumu/cs-go/api/container/provider"
-	libRedis "github.com/go-mumu/cs-go/library/redis"
 	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
 )
@@ -26,7 +25,7 @@ func InitApp() (*App, func(), error) {
 	panic(
 		wire.Build(
 			wire.Struct(new(App), "*"),
-			libRedis.Init,
+			provider.RedisProviderSet,
 			provider.ControllerProviderSet,
 		),
 	)
