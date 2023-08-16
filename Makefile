@@ -12,10 +12,10 @@ local-service1:
 		--log-path="./log.log" \
 		--consul-addr="http://127.0.0.1:8500" \
 		--consul-config-path="config/local" \
-		--node-ip="127.0.0.1" \
-		--node-port=9991 \
-		--node-id="node1" \
-		--http-port=10001
+		--grpc-service-ip="127.0.0.1" \
+		--grpc-service-port=9991 \
+		--http-service-ip="127.0.0.1" \
+		--http-service-port=10001
 
 .PHONY:local-service2
 local-service2:
@@ -23,10 +23,10 @@ local-service2:
 		--log-path="./log.log" \
 		--consul-addr="http://127.0.0.1:8500" \
 		--consul-config-path="config/local" \
-		--node-ip="127.0.0.1" \
-		--node-port=9992 \
-		--node-id="node2" \
-		--http-port=10002
+		--grpc-service-ip="127.0.0.1" \
+		--grpc-service-port=9992 \
+		--http-service-ip="127.0.0.1" \
+		--http-service-port=10002
 
 # api 依赖注入
 .PHONY:inject-service

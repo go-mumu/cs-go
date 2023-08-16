@@ -50,7 +50,7 @@ func (c *ServiceClient) discoverConsul() (*api.ServiceEntry, error) {
 		return nil, err
 	}
 
-	serviceEntry, _, err := consulClient.Health().Service(config.V.GetString("service.service_name"), "", true, &api.QueryOptions{})
+	serviceEntry, _, err := consulClient.Health().Service(config.V.GetString("server.service_name"), "", true, &api.QueryOptions{})
 
 	service := &api.ServiceEntry{}
 	if len(serviceEntry) > 0 {

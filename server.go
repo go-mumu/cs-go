@@ -24,7 +24,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = app.Server.Run(); err != nil {
-		log.Cli.Error("init server failed", "error", err)
+	if err = app.Run(); err != nil {
+		log.Cli.Error("run server failed", "error", err)
 	}
 }

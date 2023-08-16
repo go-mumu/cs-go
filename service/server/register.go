@@ -14,11 +14,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-type GrpcRegister func(*grpc.Server)
+type GRPCRegister func(*grpc.Server)
 
-type HttpRegister func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error
+type HTTPRegister func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error
 
-func HttpRegisterFunc(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption, registerFunc ...HttpRegister) error {
+func HTTPRegisterFunc(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption, registerFunc ...HTTPRegister) error {
 	for _, f := range registerFunc {
 		err := f(ctx, mux, endpoint, opts)
 		if err != nil {

@@ -11,15 +11,23 @@
 package container
 
 import (
+	"context"
+	"github.com/go-mumu/cs-go/library/common/flags"
+	"github.com/go-mumu/cs-go/library/config"
 	"github.com/go-mumu/cs-go/library/mysql"
+	"github.com/go-mumu/cs-go/proto/pb"
 	"github.com/go-mumu/cs-go/service/container/provider"
+	"github.com/go-mumu/cs-go/service/server"
 	"github.com/google/wire"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"google.golang.org/grpc"
+	"strconv"
 )
 
 // App 全局应用程序
 type App struct {
 	DefMysql *mysql.DefMysql
-	Server   *provider.Server
+	Server   *server.Server
 	Handler  *provider.Handler
 }
 
@@ -28,39 +36,42 @@ func InitApp() (*App, func(), error) {
 	panic(
 		wire.Build(
 			wire.Struct(new(App), "*"),
-			mysql.InitDef,
-			provider.NewServer,
+			provider.MysqlProviderSet,
+			provider.ServerProviderSet,
 			provider.HandlerProviderSet,
 			provider.DaoProviderSet,
 		),
 	)
 }
 
-/*func (a *App) Run() error {
-	a.Server.SetGrpcAddr(config.V.GetString("rpc.grpc_addr"))
-	a.Server.SetHttpAddr(config.V.GetString("rpc.http_addr"))
+func (app *App) Run() error {
+	app.Server.SetGRPCIp(flags.GRPCServiceIp)
+	app.Server.SetGRPCPort(strconv.FormatInt(int64(flags.GRPCServicePort), 10))
+	app.Server.SetHTTPIp(flags.HTTPServiceIp)
+	app.Server.SetHTTPPort(strconv.FormatInt(int64(flags.HTTPServicePort), 10))
 
-	a.Server.SetGrpcHandlerTimeout(config.V.GetInt("rpc.grpc_handler_timeout"))
+	app.Server.SetGRPCHandlerTimeout(config.V.GetInt("server.grpc_handler_timeout"))
+	app.Server.SetHTTPHandlerTimeout(config.V.GetInt("server.http_handler_timeout"))
 
-	a.Server.SetHttpReadTimeout(config.V.GetInt("rpc.http_read_timeout"))
-	a.Server.SetHttpWriteTimeout(config.V.GetInt("rpc.http_write_timeout"))
+	app.Server.SetHTTPReadTimeout(config.V.GetInt("server.http_read_timeout"))
+	app.Server.SetHTTPWriteTimeout(config.V.GetInt("server.http_write_timeout"))
 
-	a.Server.SetGrpcIdleTimeout(config.V.GetInt("rpc.grpc_idle_timeout"))
-	a.Server.SetHttpIdleTimeout(config.V.GetInt("rpc.http_idle_timeout"))
+	app.Server.SetMaxConnectionIdle(config.V.GetInt("server.max_connection_idle"))
+	app.Server.SetHTTPIdleTimeout(config.V.GetInt("server.http_idle_time_out"))
 
-	a.Server.SetMaxBodySize(config.V.GetInt("rpc.max_body_size"))
+	app.Server.SetMaxMsgSize(config.V.GetInt("server.max_msg_size_byte"))
 
-	a.Server.SetGrpcRegister(func(s *grpc.Server) {
-		pb.RegisterUserServiceServer(s, a.Handler.UserServiceHandler)
+	app.Server.SetGRPCRegister(func(s *grpc.Server) {
+		pb.RegisterUserServiceServer(s, app.Handler.UserServiceHandler)
 	})
 
-	a.Server.SetHttpRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {
-		return server.HttpRegisterFunc(ctx, mux, endpoint, opts,
-			[]server.HttpRegister{
+	app.Server.SetHTTPRegister(func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error {
+		return server.HTTPRegisterFunc(ctx, mux, endpoint, opts,
+			[]server.HTTPRegister{
 				pb.RegisterUserServiceHandlerFromEndpoint,
 			}...,
 		)
 	})
 
-	return a.Server.Run()
-}*/
+	return app.Server.Run()
+}

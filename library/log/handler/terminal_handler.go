@@ -40,16 +40,16 @@ func (h *TerminalHandler) Handle(ctx context.Context, r slog.Record) error {
 		level = color.RedString(level)
 	}
 
-	fields := make(map[string]interface{}, r.NumAttrs())
-	r.Attrs(func(a slog.Attr) bool {
-		fields[a.Key] = a.Value.Any()
+	var b []byte
+	if r.NumAttrs() > 0 {
+		fields := make(map[string]interface{}, r.NumAttrs())
+		r.Attrs(func(a slog.Attr) bool {
+			fields[a.Key] = a.Value.Any()
 
-		return true
-	})
+			return true
+		})
 
-	b, err := json.Marshal(fields)
-	if err != nil {
-		return err
+		b, _ = json.Marshal(fields)
 	}
 
 	timeStr := r.Time.Format("[2006-01-02 15:04:05.000]")
