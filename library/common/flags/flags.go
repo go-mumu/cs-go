@@ -13,20 +13,28 @@ import (
 )
 
 var LogPath string
-var ConsulAddr string
-var ConsulConfigPath string
 
-var GRPCServiceIp string
-var GRPCServicePort int
-var HTTPServiceIp string
-var HTTPServicePort int
+var (
+	ConsulAddr       string
+	ConsulConfigPath string
+)
+
+var (
+	GRPCServiceIp   string
+	GRPCServicePort int
+	HTTPServiceIp   string
+	HTTPServicePort int
+)
 
 func init() {
+	// log
 	flag.StringVar(&LogPath, "log-path", "", "-log-path")
 
+	// consul
 	flag.StringVar(&ConsulAddr, "consul-addr", "", "-consul-addr")
 	flag.StringVar(&ConsulConfigPath, "consul-config-path", "", "-consul-config-path")
 
+	// service
 	flag.StringVar(&GRPCServiceIp, "grpc-service-ip", "", "-grpc-service-ip")
 	flag.IntVar(&GRPCServicePort, "grpc-service-port", 0, "-grpc-service-port")
 	flag.StringVar(&HTTPServiceIp, "http-service-ip", "", "-http-service-ip")
